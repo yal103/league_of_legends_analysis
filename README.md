@@ -181,5 +181,19 @@ The model performs moderately, as a moderate accuracy indicates that vision metr
 
 ## Final Model
 
+To improve on our baseline model, we add a few more features:
+- `gamelength`, which accounts for the fact that longer games tend to result in higher vision scores
+- `controlwardsbought`, which is clearly a vision metric. Higher control wards bought usually indiciate better vision score
+- `side`, which seems to favor the Blue side in terms of game result
+This allow the model to better interpret whether high vision metrics reflect stronger vision control or simply more time spent in a game.
+
+We use a `FunctionTransformer` to apply consistent transformation/normalization to our vision metrics to account for game length.
+
+We use a **Random Forest classifier** since it can capture the nonlinear relationship between vision metrics and match results. The hyperparameters were tuned using `GridSearchCV` with 5-fold cross-validation with respect to the number of trees, maximum depth, minimum samples per split and leaf, and the number of features considered at each split. The best performing model used: 200 trees, a maximum depth of 10, a mimum of 10 samples per split, and `sqrt` feature selection.
+
+After training and fitting our best model, we get an accuracy score on our training data of **80.23%** and an accuracy score on our testing data of **70.88%**. Recall (0.7119), precision (0.7053), and F1 (0.7086) scores also improve.
+
+The model performance improves across all evaluation metrics, which indicates that adding more meaningful feature context with a more flexible modeling approach allows us to capture patterns in game results better.
+
 
 ## Fairness Analysis
