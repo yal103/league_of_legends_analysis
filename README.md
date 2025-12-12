@@ -111,10 +111,50 @@ We also look at how win rates compare depending on what side a team plays on (`B
 
 Teams on the Blue side tend to win more often than teams on the Red side, indicating a built-in side advantage in professional play. This is probably due to the draft order and map layout of the game (especially) since the map is not symmetric. This is why games in professional matches are best-of-3 or best-of-5, with teams switching sides each game to balance the side advantage. Therefore, it's important to include side as a feature in our predictive modeling later.
 
+### Interesting Aggregates
+
+We also took a look at some interesting aggregates of the data.
+
+A person may ask: "How does win rate change as vision score per minute increases?" By binning teams into quartiles based on vision score per minute and grouping by those quartiles, we get the following summary:
+
+|   win_rate |   num_teams |
+|-----------:|------------:|
+|   0.277846 |        4902 |
+|   0.457143 |        4900 |
+|   0.572536 |        4901 |
+|   0.692512 |        4901 |
+
+Teams in higher vision quartiles tend to have higher win rates. The `Highest` (top 25%) vision score per minute group wins more often (0.69% of the time) compared to the `Lowest` (bottom 25%) vision score per minute group (0.28% of the time). This indicates that stronger vision control is associated with better match outcomes.
+
+
+
 ## Assessment of Missingness
 
 
 ## Hypothesis Testing
+
+We want to determine whether or not vision score is a significant factor that plays a role in team's chances of winning (i.e. Do teams that win professional League of Legends matches tend to have higher vision scores than teams that lose?)
+
+**Null Hypothesis** ($H_0$): The distribution of normalized vision score is the same for winning and losing teams.
+
+**Alternative Hypothesis** ($H_1$): Winning teams have a higher normalized vision score, on average, than losing teams.
+
+**Test Statistic**: Difference in means of normalized vision score between winning and losing teams
+
+**Significance Level**: $\alpha=0.05$
+
+**Method**: Permutation Test
+
+Below is a visualization of our hypothesized test statistics and our observed test statistics:
+
+<iframe
+  src="assets/permutation.html"
+  width="800"
+  height="450"
+  frameborder="0"
+></iframe>
+
+We obtain a **p-value** of approximately **0.0**, which is less than our (standard) significance level of 0.05, so we reject our null hypothesis $H_0$. We have significance evidence that winning teams have a higher vision score, on average, than losing teams.
 
 
 ## Framing a Prediction Problem
