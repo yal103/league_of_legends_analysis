@@ -45,6 +45,7 @@ Very rarely (twice), a match ends with no winner, indicated by a `0` in the `res
 
 Normalizing each of the vision metrics by gme length is very important because longer matches naturally result in higher numbers of vision wards being placed, killed and bought, hence a larger overall team vision score. Per-minute metrics give us a clearer picture of a team's overall vision 'efficiency'. We create the following per-minute versions of each variable: `wardsplaced_per_min`, `wardskilled_per_min`, `controlwardsbought_per_min`, `visionscore_per_min` by dividing each metric by `gamelength_min = gamelength / 60`.
 
+There is no need to canonicalize the strings as all of the strings are already 'cleaned', in the sense that each of the names of the leagues are equal to each other when capitalization is not in consideration. There is also no need to canonicalize the strings in `side`. The team's side is either `Blue` or `Red`.
 The first few rows of our cleaned DataFrame as shown below:
 
 | gameid             | side   |   gamelength |   result |   wardsplaced |   wardskilled |   controlwardsbought |   visionscore |   gamelength_min |   wardsplaced_per_min |   wardskilled_per_min |   controlwardsbought_per_min |   visionscore_per_min |
@@ -55,6 +56,15 @@ The first few rows of our cleaned DataFrame as shown below:
 | 10660-10660_game_2 | Red    |         1911 |        1 |           116 |            56 |                   49 |           314 |          31.85   |               3.64207 |               1.75824 |                      1.53846 |               9.85871 |
 | 10660-10660_game_3 | Blue   |         1324 |        1 |            60 |            35 |                   23 |           162 |          22.0667 |               2.71903 |               1.5861  |                      1.0423  |               7.34139 |
 
+### Univariate Analysis
+To understand the general behavior of vision control metrics in competitive League of Legends matches, we first need a glance at how each of the features are distributed. We plot and analyze the distributions of each quantitative variable using histograms. The distribution of wards placed (`wardsplaced`) is shown below:
+
+<iframe
+  src="assets/wardsplaced.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
 
 ## Assessment of Missingness
 
