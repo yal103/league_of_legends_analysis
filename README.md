@@ -13,7 +13,6 @@ Oracle Elixir's 2024 League of Legends Esports Match Data contains player and ma
 There are many in-game factors of that predict whether a team wins a League of Legends match. Vision is one of the most strategically important, at least visible, mechanics in League of Legends. Vision control is often viewed as a win condition, but it's less obvious compared to kills or objective control. The central question we are interested in is: **To what extent does a team's vision control influence its likelihood of winning?**
 
 The dataset contains 117648 rows and 164 columns of match data. A select few of the columns will be particularly useful for our analysis.
-'top' 'jng' 'mid' 'bot' 'sup' 'team'
 
 | Column| Description | 
 | :------ | :------ | 
@@ -25,3 +24,46 @@ The dataset contains 117648 rows and 164 columns of match data. A select few of 
 |`wardskilled`| The number of enemy wards a player/team clears during the match.|
 |`controlwardsbought`| The number of control wards purchased by a player/team during the match.|
 |`visionscore`| League of Legends's in-game metric for a player/team's total vision impact.
+
+## Data Cleaning and Exploratory Data Analysis
+
+### Data Cleaning
+#### 1. Keeping Only Team Rows
+
+In our original dataset, each `gameid` corresponds to up to 12 rows – one for each of the 10 players in each match and 2 for the match summary data for each of the two teams. Since our overall question primarily focuses on the general metrics of a team rather than individual players, we will only keep the rows that correspond to teams. Since `top`, `jng` (jungle), `mid`, `bot`, and `sup` (support) refer to all and the only roles in League of Legends and since there are now rows where the position entry is missing, a row correspond to a team' match data if and only if the value of `position` for that row is `team`.
+
+#### 2. Keeping Only Relevant Columns
+
+We keep only the column that directly needed for analysis: `position`, `side`, `gamelength`, `result`, `wardsplaced`, `wardskilled`, `controlwardsbought`, `visionscore`. Narrowing the dataset reduces noise and prevents our future models from learning from irrelevant features.
+
+#### 3. Dropping Games with Unclear Results
+Very rarely (twice), a match ends with no winner, indicated by a `0` in the `result` column for both teams. Since these games misrepresent losses as real game outcomes and have little significance in our large dataset, we can drop the corresponding rows.
+
+
+#### 4. Normalizing Vision Metrics by Game Length
+
+Normalizing each of the vision metrics by gme length is very important because longer matches naturally result in higher numbers of vision wards being placed, killed and bought, hence a larger overall team vision score. Per-minute metrics give us a clearer picture of a team's overall vision 'efficiency'. We create the following per-minute versions of each variable: `wardsplaced_per_min`, `wardskilled_per_min`, `controlwardsbought_per_min`, `visionscore_per_min` by dividing each metric by `gamelength_min = gamelength / 60`.
+
+The first few rows of our cleaned DataFrame as shown below:
+
+```
+print(cleaned_lol.head().to_markdown(index=False))
+```
+
+
+## Assessment of Missingness
+
+
+## Hypothesis Testing
+
+
+## Framing a Prediction Problem
+
+
+## Baseline Model
+
+
+## Final Model
+
+
+## Fairness Analysis
