@@ -57,7 +57,13 @@ The first few rows of our cleaned DataFrame as shown below:
 | 10660-10660_game_3 | Blue   |         1324 |        1 |            60 |            35 |                   23 |           162 |          22.0667 |               2.71903 |               1.5861  |                      1.0423  |               7.34139 |
 
 ### Univariate Analysis
-To understand the general behavior of vision control metrics in competitive League of Legends matches, we first need a glance at how each of the features are distributed. We plot and analyze the distributions of each quantitative variable using histograms. The distribution of wards placed (`wardsplaced`) is shown below:
+To understand the general behavior of vision control metrics in competitive League of Legends matches, we first need a glance at how each of the features are distributed. We plot and analyze the distributions of each quantitative variable using histograms. For example, the distribution of game lengths (`gamelength`) and wards placed (`wardsplaced`) are shown below:
+<iframe
+  src="assets/gamelength.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
 
 <iframe
   src="assets/wardsplaced.html"
@@ -65,6 +71,22 @@ To understand the general behavior of vision control metrics in competitive Leag
   height="600"
   frameborder="0"
 ></iframe>
+
+Along with the other raw vision metrics, we can notice that the distribution is slightly skewed to the right. This is likely due to the fact that longer matches naturally accumulate more vision events as we can notice that the shape of the distributions of the raw vision metrics are similar to the shape of the game length.
+
+Raw totals are not good measures for analyses related to the outcome of a game. For example, a team who played for 45 minutes may appear to have much more vision control than a team who played for only 25 minutes even if the latter performed 'vision events' at a much faster rate.
+
+Therefore, to correctly measure a team's vision control effectiveness, we need to account for the length of each game, hence our need for normalized columns like `wardsplaced_per_min` and `visionscore_per_min`. Below is the distribution of the `wardsplaced_per_min`:
+
+<iframe
+  src="assets/wardsplaced_per_min.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+Comparing this with our original distributions, we can see that the distribution of our normalized vision quantities are now approximately Normal, which is more suited for analyses.
+
 
 ## Assessment of Missingness
 
