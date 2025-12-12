@@ -135,9 +135,9 @@ Teams in higher vision quartiles tend to have higher win rates. The `Highest` (t
 
 We want to determine whether or not vision score is a significant factor that plays a role in team's chances of winning (i.e. Do teams that win professional League of Legends matches tend to have higher vision scores than teams that lose?)
 
-**Null Hypothesis** ($H_0$): The distribution of normalized vision score is the same for winning and losing teams.
+**Null Hypothesis**: The distribution of normalized vision score is the same for winning and losing teams.
 
-**Alternative Hypothesis** ($H_1$): Winning teams have a higher normalized vision score, on average, than losing teams.
+**Alternative Hypothesis**: Winning teams have a higher normalized vision score, on average, than losing teams.
 
 **Test Statistic**: Difference in means of normalized vision score between winning and losing teams
 
@@ -154,13 +154,29 @@ Below is a visualization of our hypothesized test statistics and our observed te
   frameborder="0"
 ></iframe>
 
-We obtain a **p-value** of approximately **0.0**, which is less than our (standard) significance level of 0.05, so we reject our null hypothesis $H_0$. We have significance evidence that winning teams have a higher vision score, on average, than losing teams.
+We obtain a **p-value** of approximately **0.0**, which is less than our (standard) significance level of 0.05, so we reject our null hypothesis. We have significance evidence that winning teams have a higher vision score, on average, than losing teams.
 
 
 ## Framing a Prediction Problem
 
+We aim to predict whether a team wins a professional League of Legends match based on team-level vision and game-context metrics. This **binary classification** problem, whether or not a team wins (`1` = win, `0` = loss). The **response variable** are we trying to predict is `result` since it directly represents a team's match outcome.
+
+We make use of a 75% training data to 25% testing data split. To evaluate the performance of the model, we will use **accuracy** since the classes are roughly balanced and both types of misclassification are equally as important. It provides a clear baseline for comparing our models.
+
+At the time of prediction, we use the following known details for a team: `gamelength`, `wardsplaced`, `wardskilled`, `controlwardsbought`, `visionscore`, and `side`. These features are generated throughout a match and are observed during or by the end of the match. We do not include any variables that are dependent on the outcome of the game.
+
+
+
 
 ## Baseline Model
+
+We use a **Logistic Regression classifier** as the baseline model to predict whether a team wins a match (`result`). It is an appropriate baseline because it is simple and well suited for binary classification. The model uses six features: `gamelength`, `wardsplaced`, `wardskilled`, `controlwardsbought`, `visionscore`, and `side`. Of these, five are quantitative (`gamelength`, `wardsplaced`, `wardskilled`, `controlwardsbought`, `visionscore`), one is nominal (`side`), while none of them are ordinal.
+
+To preprocess the data, the quantitative features are passed through without transformation, while the nominal feature `side` is one-hot encoded (and dropping one of the classes to prevent multicollinearity).
+
+After training and fitting our model, we get an accuracy score on our training data of **71.84%** and an accuracy score on our testing data of **71.11%**. We also obtain similar recall, precision, and F1 scores of approximately 71% each.
+
+The model performs moderately well, as a moderately high accuracy indicates that vision metrics and game context does provide pretty meaningful information on match outcomes. However, the model does classify an outcome relatively frequently, around 29% of the time.
 
 
 ## Final Model
