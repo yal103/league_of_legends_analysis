@@ -87,6 +87,29 @@ Therefore, to correctly measure a team's vision control effectiveness, we need t
 
 Comparing this with our original distributions, we can see that the distribution of our normalized vision quantities are now approximately Normal, which is more suited for analyses.
 
+### Bivariate Analysis
+
+We performed a bivariate analysis on a team's vision score per minute among the result of the match for the team. The boxplots below visualize this:
+
+<iframe
+  src="assets/boxplot.html"
+  width="800"
+  height="450"
+  frameborder="0"
+></iframe>
+
+From the plots comparing the overall average (per-minute) team vision score, we can see that winning teams tend to have a higher median vision score per minute and a slightly higher overall distribution. This suggests that stronger vision control is associated with a higher chance of winning. This will motivate our later hypothesis test comparing vision between winning and losing teams.
+
+We also look at how win rates compare depending on what side a team plays on (`Blue` or `Red`).
+
+<iframe
+  src="assets/win_rate.html"
+  width="800"
+  height="450"
+  frameborder="0"
+></iframe>
+
+Teams on the Blue side tend to win more often than teams on the Red side, indicating a built-in side advantage in professional play. This is probably due to the draft order and map layout of the game (especially) since the map is not symmetric. This is why games in professional matches are best-of-3 or best-of-5, with teams switching sides each game to balance the side advantage. Therefore, it's important to include side as a feature in our predictive modeling later.
 
 ## Assessment of Missingness
 
