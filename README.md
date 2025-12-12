@@ -159,7 +159,7 @@ We obtain a **p-value** of approximately **0.0**, which is less than our (standa
 
 ## Framing a Prediction Problem
 
-We aim to predict whether a team wins a professional League of Legends match based on team-level vision and game-context metrics. This **binary classification** problem, whether or not a team wins (`1` = win, `0` = loss). The **response variable** are we trying to predict is `result` since it directly represents a team's match outcome.
+We aim to predict whether a team wins a professional League of Legends match based on team-level vision and other game-context metrics. This **binary classification** problem, whether or not a team wins (`1` = win, `0` = loss). The **response variable** are we trying to predict is `result` since it directly represents a team's match outcome.
 
 We make use of a 75% training data to 25% testing data split. To evaluate the performance of the model, we will use **accuracy** since the classes are roughly balanced and both types of misclassification are equally as important. It provides a clear baseline for comparing our models.
 
@@ -170,13 +170,13 @@ At the time of prediction, we use the following known details for a team: `gamel
 
 ## Baseline Model
 
-We use a **Logistic Regression classifier** as the baseline model to predict whether a team wins a match (`result`). It is an appropriate baseline because it is simple and well suited for binary classification. The model uses six features: `gamelength`, `wardsplaced`, `wardskilled`, `controlwardsbought`, `visionscore`, and `side`. Of these, five are quantitative (`gamelength`, `wardsplaced`, `wardskilled`, `controlwardsbought`, `visionscore`), one is nominal (`side`), while none of them are ordinal.
+We use a **Logistic Regression classifier** as the baseline model to predict whether a team wins a match (`result`). It is an appropriate baseline because it is simple and well suited for binary classification. The model uses four features: `wardsplaced`, `wardskilled`, and `visionscore`. They are all quantitative variables (none of them are ordinal or nominal).
 
-To preprocess the data, the quantitative features are passed through without transformation, while the nominal feature `side` is one-hot encoded (and dropping one of the classes to prevent multicollinearity).
+To preprocess the data, the quantitative features are passed through without transformation.
 
-After training and fitting our model, we get an accuracy score on our training data of **71.84%** and an accuracy score on our testing data of **71.11%**. We also obtain similar recall, precision, and F1 scores of approximately 71% each.
+After training and fitting our model, we get an accuracy score on our training data of **64.98%** and an accuracy score on our testing data of **64.91%**. We also obtain similar recall (0.627), precision (0.653), and F1 (0.640) scores.
 
-The model performs moderately well, as a moderately high accuracy indicates that vision metrics and game context does provide pretty meaningful information on match outcomes. However, the model does classify an outcome relatively frequently, around 29% of the time.
+The model performs moderately, as a moderate accuracy indicates that vision metrics and game context does provide somewhat meaningful information on match outcomes. However, the model does classify an outcome relatively frequently, around 35% of the time.
 
 
 ## Final Model
