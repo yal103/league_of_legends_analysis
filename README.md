@@ -61,14 +61,14 @@ To understand the general behavior of vision control metrics in competitive Leag
 <iframe
   src="assets/gamelength.html"
   width="800"
-  height="auto"
+  height="600"
   frameborder="0"
 ></iframe>
 
 <iframe
   src="assets/visionscore.html"
   width="800"
-  height="auto"
+  height="600"
   frameborder="0"
 ></iframe>
 
@@ -81,7 +81,7 @@ Therefore, to correctly measure a team's vision control effectiveness, we need t
 <iframe
   src="assets/visionscore_per_min.html"
   width="800"
-  height="auto"
+  height="600"
   frameborder="0"
 ></iframe>
 
