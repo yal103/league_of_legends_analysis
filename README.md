@@ -16,6 +16,7 @@ The dataset contains 117648 rows and 164 columns of match data. A select few of 
 
 | Column| Description | 
 | :------ | :------ | 
+|`gameid`| The unique identifier of a game.
 | `position`     | The position of the player (either `top`, `jng`, `mid`, `bot`, `sup`). If the row corresponds to team data, the value is `team`.   | 
 | `side`  | The side in which a player/team plays during the match, either `Blue` or `Red`.  | 
 | `gamelength`| The duration of the match (in seconds).|
@@ -34,7 +35,7 @@ In our original dataset, each `gameid` corresponds to up to 12 rows – one for 
 
 #### 2. Keeping Only Relevant Columns
 
-We keep only the column that directly needed for analysis: `position`, `side`, `gamelength`, `result`, `wardsplaced`, `wardskilled`, `controlwardsbought`, `visionscore`. Narrowing the dataset reduces noise and prevents our future models from learning from irrelevant features.
+We keep only the column that directly needed for analysis: `gameid`, `position`, `side`, `gamelength`, `result`, `wardsplaced`, `wardskilled`, `controlwardsbought`, `visionscore`. Narrowing the dataset reduces noise and prevents our future models from learning from irrelevant features.
 
 #### 3. Dropping Games with Unclear Results
 Very rarely (twice), a match ends with no winner, indicated by a `0` in the `result` column for both teams. Since these games misrepresent losses as real game outcomes and have little significance in our large dataset, we can drop the corresponding rows.
@@ -46,9 +47,13 @@ Normalizing each of the vision metrics by gme length is very important because l
 
 The first few rows of our cleaned DataFrame as shown below:
 
-```
-print(cleaned_lol.head().to_markdown(index=False))
-```
+| gameid             | side   |   gamelength |   result |   wardsplaced |   wardskilled |   controlwardsbought |   visionscore |   gamelength_min |   wardsplaced_per_min |   wardskilled_per_min |   controlwardsbought_per_min |   visionscore_per_min |
+|:-------------------|:-------|-------------:|---------:|--------------:|--------------:|---------------------:|--------------:|-----------------:|----------------------:|----------------------:|-----------------------------:|----------------------:|
+| 10660-10660_game_1 | Blue   |         1886 |        0 |            97 |            59 |                   33 |           250 |          31.4333 |               3.0859  |               1.87699 |                      1.04984 |               7.95334 |
+| 10660-10660_game_1 | Red    |         1886 |        1 |           122 |            49 |                   56 |           277 |          31.4333 |               3.88123 |               1.55885 |                      1.78155 |               8.8123  |
+| 10660-10660_game_2 | Blue   |         1911 |        0 |            88 |            47 |                   39 |           236 |          31.85   |               2.76295 |               1.47567 |                      1.22449 |               7.40973 |
+| 10660-10660_game_2 | Red    |         1911 |        1 |           116 |            56 |                   49 |           314 |          31.85   |               3.64207 |               1.75824 |                      1.53846 |               9.85871 |
+| 10660-10660_game_3 | Blue   |         1324 |        1 |            60 |            35 |                   23 |           162 |          22.0667 |               2.71903 |               1.5861  |                      1.0423  |               7.34139 |
 
 
 ## Assessment of Missingness
