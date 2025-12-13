@@ -130,6 +130,10 @@ Teams in higher vision quartiles tend to have higher win rates. The `Highest` (t
 
 ## Assessment of Missingness
 
+### NMAR Analysis
+
+We believe that the missingness (7392 missing values) in column `ban1` in likely NMAR since the missingness depends on the value itself. In a competitive League of Legends match, players, under short time limit, take turns banning champions from the champion pool. However, players also have the option to not ban any of the champions by waiting out the time limit. Therefore, it is pretty likely that the value of `ban1` being missing is attributed to the fact that the first player of a team did not choose to ba na champion. If we were to obtain additional data telling us whether all players of a team decided to ban a champion, then the data would be MAR. As the missingness for `bar1` likely depends on whether or not all players on a team chose to ban a champion.
+
 
 ## Hypothesis Testing
 
