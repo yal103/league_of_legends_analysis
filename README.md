@@ -141,7 +141,7 @@ We want to determine whether or not vision score is a significant factor that pl
 
 **Test Statistic**: Difference in means of normalized vision score between winning and losing teams
 
-**Significance Level**: $\alpha=0.05$
+**Significance Level**: 0.05
 
 **Method**: Permutation Test
 
@@ -197,3 +197,21 @@ The model performance improves across all evaluation metrics, which indicates th
 
 
 ## Fairness Analysis
+
+We perform a "fairness analysis" of our final model. We attempt to answer the question: "Does the final model perform worse for teams playing on the `Red` side than it does for teams playing on the `Blue` side. **Group X** are teams playing on the `Red` side while **Group Y** are teams playing on the `Blue` side.
+
+We use **precision** as our evaluation metric, which measures how often teams predicted to win actually win. Precision is appropriate because false positives (predicting that a team wins when it loses) are meaningful errors in our context.
+
+The test statistic we use is the **difference in precision** between Blue and Red side teams (Blue - Red), where larger positive values indicate better model performance for Blue side teams.
+
+**Null Hypothesis**: The model is fair with respect to side. Any difference in precision is due to random chance.
+
+**Alternative Hypothesis**: The model is unfair with respect to side. The precision for Red side teams is lower than its precision for Blue side teams.
+
+**Test Statistic**: difference in precision between Blue and Red side teams (Blue - Red), where larger positive values indicate better model performance for Blue side teams.
+
+**Significance Level**: 0.05
+
+**Method**: Permutation Test
+
+After running the permutation test, we obtain a **p-value** of 0.0088, which is less than our significance level of 0.05. Therefore, we **reject** the null hypothesis. We have significance evidence that the model is unfair with respect to side. The precision for Red side teams is lower than its precision for Blue side teams.
