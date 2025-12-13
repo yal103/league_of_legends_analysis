@@ -134,6 +134,46 @@ Teams in higher vision quartiles tend to have higher win rates. The `Highest` (t
 
 We believe that the missingness (7392 missing values) in column `ban1` in likely NMAR since the missingness depends on the value itself. In a competitive League of Legends match, players, under short time limit, take turns banning champions from the champion pool. However, players also have the option to not ban any of the champions by waiting out the time limit. Therefore, it is pretty likely that the value of `ban1` being missing is attributed to the fact that the first player of a team did not choose to ba na champion. If we were to obtain additional data telling us whether all players of a team decided to ban a champion, then the data would be MAR. As the missingness for `bar1` likely depends on whether or not all players on a team chose to ban a champion.
 
+### Missingness Dependency
+
+We determine whether of not the missingness of `firstblood` depends on two selected columns: `position` and ______.
+
+`firstblood` and `position`:
+
+We perform a permutation test to test the following hypotheses:
+
+**Null Hypothesis**: The distribution of `position` when `firstblood` is missing is the same as the distribution of `position` when `firstblood` is not missing.
+
+**Alternative Hypothesis**: The distribution of `position` when `firstblood` is missing is the **not** the same as the distribution of `position` when `firstblood` is not missing.
+
+**Test statistic**: Total Variation Distance
+
+**Significance Level**: 0.05
+
+Below is the distribution of `position` when `firstblood` is missing and not missing.
+
+|     True |   False |
+|---------:|--------:|
+| 0.162197 |     0.2 |
+| 0.162197 |     0.2 |
+| 0.162197 |     0.2 |
+| 0.162197 |     0.2 |
+| 0.189015 |     0   |
+| 0.162197 |     0.2 |
+
+After running the permutation test, we get an **observed statistic** of approximately 0.14188 with a **p-value** of approximately 0. Since our p-value is less than our significance level of 0.05, we **reject** the null hypothesis. We have significance evidence that the distribution of `position` when `firstblood` is missing is the **not** the same as the distribution of `position` when `firstblood` is not missing (i.e. the missingness of `firstblood` depends on the value of `position`).
+
+We can visualize the empirical distribution of our test statistics with our observed statistic below:
+
+<iframe
+  src="assets/fb_vs_position.html"
+  width="800"
+  height="450"
+  frameborder="0"
+></iframe>
+
+
+
 
 ## Hypothesis Testing
 
