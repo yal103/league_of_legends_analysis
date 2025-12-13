@@ -136,7 +136,7 @@ We believe that the missingness (7392 missing values) in column `ban1` in likely
 
 ### Missingness Dependency
 
-We determine whether of not the missingness of `firstblood` depends on two selected columns: `position` and ______.
+We determine whether of not the missingness of `firstblood` depends on two selected columns: `position` and `side`.
 
 `firstblood` and `position`:
 
@@ -152,14 +152,14 @@ We perform a permutation test to test the following hypotheses:
 
 Below is the distribution of `position` when `firstblood` is missing and not missing.
 
-|     True |   False |
-|---------:|--------:|
-| 0.162197 |     0.2 |
-| 0.162197 |     0.2 |
-| 0.162197 |     0.2 |
-| 0.162197 |     0.2 |
-| 0.189015 |     0   |
-| 0.162197 |     0.2 |
+|   position |     firstblood_missing = True |   firstblood_missing = False |
+|:-----------|---------:|--------:|
+| bot        | 0.162197 |     0.2 |
+| jng        | 0.162197 |     0.2 |
+| mid        | 0.162197 |     0.2 |
+| sup        | 0.162197 |     0.2 |
+| team       | 0.189015 |     0   |
+| top        | 0.162197 |     0.2 |
 
 After running the permutation test, we get an **observed statistic** of approximately 0.14188 with a **p-value** of approximately 0. Since our p-value is less than our significance level of 0.05, we **reject** the null hypothesis. We have significance evidence that the distribution of `position` when `firstblood` is missing is the **not** the same as the distribution of `position` when `firstblood` is not missing (i.e. the missingness of `firstblood` depends on the value of `position`).
 
@@ -173,7 +173,35 @@ We can visualize the empirical distribution of our test statistics with our obse
 ></iframe>
 
 
+`position` and `side`:
 
+We perform a permutation test to test the following hypotheses:
+
+**Null Hypothesis**: The distribution of `side` when `firstblood` is missing is the same as the distribution of `side` when `firstblood` is not missing.
+
+**Alternative Hypothesis**: The distribution of `side` when `firstblood` is missing is the **not** the same as the distribution of `side` when `firstblood` is not missing.
+
+**Test statistic**: Total Variation Distance
+
+**Significance Level**: 0.05
+
+Below is the distribution of `side` when `firstblood` is missing and not missing.
+
+| side   |   firstblood_missing = True |   firstblood_missing = False |
+|:-------|----:|----:|
+| Blue   | 0.5 | 0.5 |
+| Red    | 0.5 | 0.5 |
+
+After running the permutation test, we get an **observed statistic** of 0 with a **p-value** of approximately 1.0. Since our p-value is greater than our significance level of 0.05, we **fail to reject** the null hypothesis. We do not have significance evidence that the distribution of `side` when `firstblood` is missing is the **not** the same as the distribution of `side` when `firstblood` is not missing (i.e. the missingness of `firstblood` does not depend on the value of `side`).
+
+We can visualize the empirical distribution of our test statistics with our observed statistic below:
+
+<iframe
+  src="assets/firstblood_vs_side.html"
+  width="800"
+  height="450"
+  frameborder="0"
+></iframe>
 
 ## Hypothesis Testing
 
@@ -208,8 +236,6 @@ We aim to predict whether a team wins a professional League of Legends match bas
 We make use of a 75% training data to 25% testing data split. To evaluate the performance of the model, we will use **accuracy** since the classes are roughly balanced and both types of misclassification are equally as important. It provides a clear baseline for comparing our models.
 
 At the time of prediction, we use the following known details for a team: `gamelength`, `wardsplaced`, `wardskilled`, `controlwardsbought`, `visionscore`, and `side`. These features are generated throughout a match and are observed during or by the end of the match. We do not include any variables that are dependent on the outcome of the game.
-
-
 
 
 ## Baseline Model
